@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:routetitan/models/stop_data.dart';
 import 'package:routetitan/views/hq.dart';
+import 'package:provider/provider.dart';
 
 void main() {
 
@@ -14,7 +16,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return ChangeNotifierProvider<StopData>(
+      create: (context) => StopData()
+      ,child: MaterialApp(
       title: 'Routetitan Flatter Assignment',
 
       theme: ThemeData(
@@ -32,6 +36,6 @@ class MyApp extends StatelessWidget {
         "/Hq":(context) => const Directionality(textDirection: TextDirection.ltr, child: Hq()),
 
       },
-    );
+    ));
   }
 }

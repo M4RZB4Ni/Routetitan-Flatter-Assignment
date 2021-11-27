@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:routetitan/views/stops.dart';
 
-class StopItem extends StatefulWidget{
+class StopItem{
 
 
 
@@ -11,26 +9,22 @@ class StopItem extends StatefulWidget{
   late String startTime;
   late String endTime;
   late String estimatedTime;
-  late int stopState;
+  late bool taskStopped;
 
 
 
-  void toggleSelected(int index) {
-    itemIndex = index;
+  void toggleStop() {
+    taskStopped = !taskStopped;
   }
 
 
-  StopItem.none({Key? key}) : super(key: key);
 
   StopItem(
-      {Key? key, required this.itemIndex,
+      {required this.itemIndex,
       required this.address,
       required this.startTime,
       required this.endTime,
-      required this.estimatedTime,required this.stopState}) : super(key: key);
+      required this.estimatedTime,required this.taskStopped});
 
-  @override
-  State<StatefulWidget> createState() {
-    return StopsState();
-  }
+
 }
