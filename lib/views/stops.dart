@@ -42,15 +42,16 @@ class StopsState extends State<Stops>{
       StopItem(itemIndex: 14814655,address: "tabriz,Downtown 1456 st number12",startTime: "01:00",endTime: "02:00",estimatedTime: "1:00"),
 
     ];
-
-
-    return ListView.builder(
-        itemCount: stopsList.length,
-        itemBuilder: (context, index) {
-          return Card(child: InkWell(child:Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    Card itemView(context,index)
+    {
+      return Card(child: InkWell(child:Padding(padding: const EdgeInsets.all(6),
+          child:Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(width: w*0.15,height: h*0.07,decoration: const BoxDecoration(shape: BoxShape.circle,color: Color(0xffE90052)),child: Center(child: Text(stopsList[index].itemIndex.toString().substring(0,1),style: Theme.of(context).textTheme.headline1,)),),
+              Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: Container(width: w*0.15,height: h*0.07,decoration: const BoxDecoration(shape: BoxShape.circle,color: Color(0xffE90052)),child: Center(child: Text(stopsList[index].itemIndex.toString().substring(0,1),style: Theme.of(context).textTheme.headline1,)),),
+              ),
 
               Expanded(child: Column(
                 children: [
@@ -60,18 +61,50 @@ class StopsState extends State<Stops>{
                       Text(stopsList[index].itemIndex.toString(),style: Theme.of(context).textTheme.headline1!.copyWith(color: Colors.black),),
                       Text(stopsList[index].estimatedTime,style: Theme.of(context).textTheme.headline1!.copyWith(color: Colors.lightGreen),),
                     ],),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8,bottom: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(constraints: BoxConstraints(maxWidth: w/2.5),child: Text(stopsList[index].address.toString(),maxLines: 2,style: Theme.of(context).textTheme.bodyText1)),
+                        Text("${stopsList[index].startTime} - ${stopsList[index].endTime}",style: Theme.of(context).textTheme.bodyText1),
+                      ],),
+                  ),
+                  const Divider(thickness: 1,color: Colors.grey,height: 1),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(constraints: BoxConstraints(maxWidth: w/2.5),child: Text(stopsList[index].address.toString(),maxLines: 2,)),
-                      Text("${stopsList[index].startTime} : ${stopsList[index].endTime}"),
+                      Container(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          IconButton(onPressed: () {
+                          }, icon: const Icon(Icons.navigation,color: Colors.blue),iconSize: 35,),
+                          Text("Navigate",style: Theme.of(context).textTheme.subtitle1,)
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          IconButton(onPressed: () {
+                          }, icon: const Icon(Icons.check,color: Colors.blue),iconSize: 35,),
+                          Text("Finish",style: Theme.of(context).textTheme.subtitle1,)
+                        ],
+                      ),
                     ],)
                 ],)),
-            ],)),
-          );
+            ],))));
+    }
+
+    return ListView.builder(
+        itemCount: stopsList.length,
+        itemBuilder: (context, index) {
+          return itemView(context,index);
         },
 
     );
+
+
   }
 
 }
