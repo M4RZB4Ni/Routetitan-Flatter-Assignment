@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:routetitan/views/map.dart';
+import 'package:routetitan/views/stops.dart';
 
 class Hq extends StatefulWidget{
   const Hq({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class HqState extends State<Hq>{
         Tab(text: "MAP",),
       ],
     ),),body: const TabBarView(children: [
-          Text("none"),
+          Stops(),
           Map()
 
     ],),)
