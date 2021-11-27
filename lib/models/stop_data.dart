@@ -5,18 +5,21 @@ class StopData extends ChangeNotifier{
 
   List<StopItem> stops = [];
 
-  void updateStop(StopItem stopItem){
-    stopItem.toggleStop();
+  void selectStop(StopItem stopItem){
+    stopItem.toggleState("Selected");
     notifyListeners();
   }
-
+  void finishStop(StopItem stopItem){
+    stopItem.toggleState("Finished");
+    notifyListeners();
+  }
   void addStops({required itemIndex,
     required address,
     required startTime,
     required endTime,
-    required estimatedTime,required taskStopped})
+    required estimatedTime,required taskState})
   {
-    final stop=StopItem(itemIndex: itemIndex, address: address, startTime: startTime, endTime: endTime, estimatedTime: estimatedTime, taskStopped: taskStopped);
+    final stop=StopItem(itemIndex: itemIndex, address: address, startTime: startTime, endTime: endTime, estimatedTime: estimatedTime, taskState: taskState);
     stops.add(stop);
    // notifyListeners();
   }

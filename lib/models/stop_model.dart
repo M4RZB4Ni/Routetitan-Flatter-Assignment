@@ -9,12 +9,12 @@ class StopItem{
   late String startTime;
   late String endTime;
   late String estimatedTime;
-  late bool taskStopped;
+  late String taskState;
 
 
 
-  void toggleStop() {
-    taskStopped = !taskStopped;
+  void toggleState(String taskState) {
+    this.taskState = taskState;
   }
 
 
@@ -24,7 +24,7 @@ class StopItem{
       required this.address,
       required this.startTime,
       required this.endTime,
-      required this.estimatedTime,required this.taskStopped});
+      required this.estimatedTime,required this.taskState});
 
 
 }
