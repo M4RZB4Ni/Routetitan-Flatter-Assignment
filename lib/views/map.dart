@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import "package:flutter_map/flutter_map.dart";
+import 'package:location/location.dart';
 
 class Map extends StatefulWidget{
-  const Map({Key? key}) : super(key: key);
+  LocationData locationData;
+   Map({Key? key,required this.locationData}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

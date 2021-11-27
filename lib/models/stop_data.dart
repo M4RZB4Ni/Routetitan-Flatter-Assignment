@@ -6,9 +6,11 @@ class StopData extends ChangeNotifier{
   List<StopItem> stops = [];
 
   void selectStop(StopItem stopItem){
-    stopItem.taskState=="Selected" ?
-    stopItem.toggleState("UnSelected") : stopItem.toggleState("Selected");
-    notifyListeners();
+    if(stopItem.taskState!="Finished") {
+      stopItem.taskState == "Selected" ?
+      stopItem.toggleState("UnSelected") : stopItem.toggleState("Selected");
+      notifyListeners();
+    }
   }
   void unselectAll()
   {

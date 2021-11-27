@@ -51,30 +51,52 @@ class StopsState extends State<Stops>{
     Provider.of<StopData>(context, listen: false).addStops(itemIndex: 48503628,address: "lavasan,Downtown 1456 st number12",startTime: "02:00",endTime: "03:30",estimatedTime: "1:30",taskState: "notSelected");
 
 
-   return Consumer<StopData>(builder: (context, stopData, child) {
+   return Scaffold(backgroundColor: const Color(0xff53676d),body: Consumer<StopData>(builder: (context, stopData, child) {
      return ListView(children: stopData.stops.map((stop) =>
          InkWell(onTap:() {
            stopData.unselectAll();
            stopData.selectStop(stop);
          }
          ,child: Card(
+               elevation: 0,
          key: Key('${stopData.stops.indexOf(stop)}'),
          color: stop.taskState=="Finished" ? const Color(0xff53676d): stop.taskState=="Selected" ? Colors.white : Colors.grey.shade400,child: InkWell(child:Padding(padding: const EdgeInsets.all(6),
          child:Row(
            crossAxisAlignment: CrossAxisAlignment.start,
            children: [
+             stop.taskState=="Finished" ?
+
              Padding(
                padding: const EdgeInsets.only(right: 8),
-               child: Container(width: w*0.15,height: h*0.07,decoration:  const BoxDecoration(shape: BoxShape.circle,color:  Color(0xffE90052)),child: Center(child: Text(stop.itemIndex.toString().substring(0,1),style: Theme.of(context).textTheme.headline1,)),),
-             ),
+               child: Container(width: w*0.15,height: h*0.07,
+                   decoration:  const BoxDecoration(shape: BoxShape.circle,color:  Color(0xff4688f1)),
+                   child: const Center(child: Icon(Icons.check,size: 24,color: Colors.white,)))) :
+
+             stop.taskState=="Selected" ?
+             Padding(padding: const EdgeInsets.only(right: 8),
+                 child: Container(width: w*0.15,height: h*0.07,
+                     decoration:  const BoxDecoration(shape: BoxShape.circle,color:  Color(0xffE90052)),
+                     child: Center(child: Text(stop.itemIndex.toString().substring(0,1),
+                       style: Theme.of(context).textTheme.headline1,))))
+
+                 :
+             Padding(padding: const EdgeInsets.only(right: 8),
+                 child: Container(width: w*0.12,height: h*0.06,
+                     decoration:  const BoxDecoration(shape: BoxShape.circle,color:  Color(0xffdedede)),
+                     child: Center(child: Text(stop.itemIndex.toString().substring(0,1),
+                       style: Theme.of(context).textTheme.headline1!.copyWith(color: Colors.black87),)))),
 
              Expanded(child: Column(
                children: [
                  Row(
                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                    children: [
-                     Text(stop.itemIndex.toString(),style: Theme.of(context).textTheme.headline1!.copyWith(color: Colors.black),),
-                     Text(stop.estimatedTime,style: Theme.of(context).textTheme.headline1!.copyWith(color: Colors.lightGreen),),
+                     stop.taskState=="Finished" ?
+                     Text(stop.itemIndex.toString(),style: Theme.of(context).textTheme.headline1!.copyWith(color: Colors.grey.shade500),) :
+                        Text(stop.itemIndex.toString(),style: Theme.of(context).textTheme.headline1!.copyWith(color: Colors.black87),) ,
+
+                     Visibility(visible: stop.taskState!="Finished"
+                       ,child: Text(stop.estimatedTime,style: Theme.of(context).textTheme.headline1!.copyWith(color: Colors.lightGreen),)),
                    ],),
                  Padding(
                    padding: const EdgeInsets.only(top: 8,bottom: 15),
@@ -82,7 +104,8 @@ class StopsState extends State<Stops>{
                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                      children: [
                        Container(constraints: BoxConstraints(maxWidth: w/2.5),child: Text(stop.address.toString(),maxLines: 2,style: Theme.of(context).textTheme.bodyText1)),
-                       Text("${stop.startTime} - ${stop.endTime}",style: Theme.of(context).textTheme.bodyText1),
+                       Visibility(visible: stop.taskState!="Finished"
+                           ,child: Text("${stop.startTime} - ${stop.endTime}",style: Theme.of(context).textTheme.bodyText1)),
                      ],),
                  ),
                  Visibility(
@@ -116,7 +139,7 @@ class StopsState extends State<Stops>{
            ],)))))).toList(),
 
      );
-   },);
+   },));
 
 
 
