@@ -54,11 +54,12 @@ class StopsState extends State<Stops>{
    return Consumer<StopData>(builder: (context, stopData, child) {
      return ListView(children: stopData.stops.map((stop) =>
          InkWell(onTap:() {
+           stopData.unselectAll();
            stopData.selectStop(stop);
          }
          ,child: Card(
          key: Key('${stopData.stops.indexOf(stop)}'),
-         color: stop.taskState=="Selected" ? Colors.white : Colors.grey.shade400,child: InkWell(child:Padding(padding: const EdgeInsets.all(6),
+         color: stop.taskState=="Finished" ? const Color(0xff53676d): stop.taskState=="Selected" ? Colors.white : Colors.grey.shade400,child: InkWell(child:Padding(padding: const EdgeInsets.all(6),
          child:Row(
            crossAxisAlignment: CrossAxisAlignment.start,
            children: [
@@ -84,8 +85,12 @@ class StopsState extends State<Stops>{
                        Text("${stop.startTime} - ${stop.endTime}",style: Theme.of(context).textTheme.bodyText1),
                      ],),
                  ),
-                 const Divider(thickness: 1,color: Colors.grey,height: 1),
-                 Row(
+                 Visibility(
+                   visible: stop.taskState=="Selected",
+                   child: const Divider(thickness: 1,color: Colors.grey,height: 1)),
+                 Visibility(
+                     visible: stop.taskState=="Selected",
+                     child: Row(
                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                    children: [
                      Container(),
@@ -106,7 +111,7 @@ class StopsState extends State<Stops>{
                          Text("Finish",style: Theme.of(context).textTheme.subtitle1,)
                        ],
                      ),
-                   ],)
+                   ],))
                ],)),
            ],)))))).toList(),
 
