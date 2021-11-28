@@ -5,8 +5,6 @@ import 'package:provider/provider.dart';
 
 void main() {
 
-
-
   runApp(const MyApp());
 }
 
@@ -16,7 +14,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<StopData>(
+    return
+       ChangeNotifierProvider<StopData>(
       create: (context) => StopData()
       ,child: MaterialApp(
       title: 'Routetitan Flatter Assignment',

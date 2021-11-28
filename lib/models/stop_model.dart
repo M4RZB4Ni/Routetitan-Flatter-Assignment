@@ -1,3 +1,4 @@
+import 'package:latlong2/latlong.dart';
 
 class StopItem{
 
@@ -10,6 +11,7 @@ class StopItem{
   late String endTime;
   late String estimatedTime;
   late String taskState;
+  late LatLng destination;
 
 
 
@@ -24,7 +26,7 @@ class StopItem{
       required this.address,
       required this.startTime,
       required this.endTime,
-      required this.estimatedTime,required this.taskState});
+      required this.estimatedTime,required this.taskState,required this.destination});
 
 
 }

@@ -1,11 +1,15 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:routetitan/models/stop_model.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class StopData extends ChangeNotifier{
 
   List<StopItem> stops = [];
 
   void selectStop(StopItem stopItem){
+    unselectAll();
     if(stopItem.taskState!="Finished") {
       stopItem.taskState == "Selected" ?
       stopItem.toggleState("UnSelected") : stopItem.toggleState("Selected");
@@ -20,21 +24,49 @@ class StopData extends ChangeNotifier{
           {
             stops[i].taskState="UnSelected";
           }
-        notifyListeners();
+       // notifyListeners();
 
       }
   }
-  void finishStop(StopItem stopItem){
-    stopItem.toggleState("Finished");
-    notifyListeners();
+  LatLng getSelected()
+  {
+    //debugPrint("getSelected--> ${stops.where((item) => item.taskState=="Selected").first.destination.latitude}");
+     return stops.where((item) => item.taskState=="Selected").first.destination;
+
   }
-  void addStops({required itemIndex,
-    required address,
+
+  void finishStop(StopItem stopItem) async{
+    if(stopItem.taskState=="Navigate") {
+      stopItem.toggleState("Finished");
+      notifyListeners();
+    }else{
+      Fluttertoast.showToast(
+          msg: "You must Navigate to Dest First!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+    }
+  }
+  void navigateStop(StopItem stopItem){
+    if(stopItem.taskState=="Selected") {
+      stopItem.toggleState("Navigate");
+      notifyListeners();
+    }
+  }
+  void clearList()
+  {
+    stops.clear();
+  }
+  void addStops({required int itemIndex,
+    required String address,
     required startTime,
     required endTime,
-    required estimatedTime,required taskState})
+    required estimatedTime,required taskState,required destination})
   {
-    final stop=StopItem(itemIndex: itemIndex, address: address, startTime: startTime, endTime: endTime, estimatedTime: estimatedTime, taskState: taskState);
+    final stop=StopItem(itemIndex: itemIndex, address: address, startTime: startTime, endTime: endTime, estimatedTime: estimatedTime, taskState: taskState,destination: destination);
     stops.add(stop);
    // notifyListeners();
   }
