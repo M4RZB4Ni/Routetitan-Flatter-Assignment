@@ -5,10 +5,9 @@ import "package:flutter_map/flutter_map.dart";
 import 'package:location/location.dart';
 import 'package:routetitan/models/stop_data.dart';
 import 'package:provider/provider.dart';
-import 'package:latlong2/latlong.dart';
 
 class Map extends StatefulWidget{
-   Map({Key? key}) : super(key: key);
+   const Map({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -47,7 +46,7 @@ class MapState extends State<Map>
         return null;
       }
     }
-    //debugPrint("locationData--> ${_locationData.latitude}");
+
 
     return _locationData = await location.getLocation();
 
@@ -79,7 +78,7 @@ class MapState extends State<Map>
                   point: LatLng(snapshot.data!.latitude??1.1,snapshot.data!.longitude??2.2),
                   builder: (ctx) =>
                        Column(children: [
-                         Icon(Icons.location_history,size: 60,),
+                         const Icon(Icons.location_history,size: 60,),
                          Text("You",style: Theme.of(context).textTheme.headline1!.copyWith(color: Colors.black87,fontWeight: FontWeight.w900),)
                        ],),
                 ),
@@ -89,12 +88,13 @@ class MapState extends State<Map>
                   point: LatLng(Provider.of<StopData>(context, listen: false).getSelected().latitude,Provider.of<StopData>(context, listen: false).getSelected().longitude),
                   builder: (ctx) =>
                        Column(children: [
-                         Icon(Icons.location_history,size: 60,),
+                         const Icon(Icons.location_history,size: 60,),
                          Text("Dest",style: Theme.of(context).textTheme.headline1!.copyWith(color: Colors.black87,fontWeight: FontWeight.w900),)
                        ],),
                 ),
               ],
-            )
+            ),
+
           ],
         )
       ],)

@@ -20,7 +20,7 @@ class StopData extends ChangeNotifier{
   {
     for(int i=0;i<stops.length;i++)
       {
-        if(stops[i].taskState=="Selected")
+        if(stops[i].taskState=="Selected" || stops[i].taskState=="SelectedAndNavigated")
           {
             stops[i].taskState="UnSelected";
           }
@@ -30,13 +30,22 @@ class StopData extends ChangeNotifier{
   }
   LatLng getSelected()
   {
-    //debugPrint("getSelected--> ${stops.where((item) => item.taskState=="Selected").first.destination.latitude}");
-     return stops.where((item) => item.taskState=="Selected").first.destination;
+
+    try{
+      return stops.where((item) => item.taskState=="SelectedAndNavigated").first.destination;
+    }catch (e){
+      try {
+         return stops.where((item) => item.taskState=="Selected").first.destination;
+      } catch(e) {
+            return stops.first.destination;
+
+      }
+    }
 
   }
 
   void finishStop(StopItem stopItem) async{
-    if(stopItem.taskState=="Navigate") {
+    if(stopItem.taskState=="SelectedAndNavigated") {
       stopItem.toggleState("Finished");
       notifyListeners();
     }else{
@@ -53,6 +62,7 @@ class StopData extends ChangeNotifier{
   void navigateStop(StopItem stopItem){
     if(stopItem.taskState=="Selected") {
       stopItem.toggleState("Navigate");
+      stopItem.toggleState("SelectedAndNavigated");
       notifyListeners();
     }
   }

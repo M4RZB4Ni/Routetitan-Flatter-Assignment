@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:routetitan/models/stop_data.dart';
 import 'package:provider/provider.dart';
-import 'package:latlong2/latlong.dart';
 
 class Stops extends StatefulWidget{
   final TabController tabController;
@@ -42,7 +41,7 @@ class StopsState extends State<Stops>{
          ,child: Card(
                elevation: 0,
          key: Key('${stopData.stops.indexOf(stop)}'),
-         color: stop.taskState=="Finished" ? const Color(0xff53676d): stop.taskState=="Selected" ? Colors.white : Colors.grey.shade400,child: InkWell(child:Padding(padding: const EdgeInsets.all(6),
+         color: stop.taskState=="Finished" ? const Color(0xff53676d): stop.taskState=="Selected" || stop.taskState=="SelectedAndNavigated" ? Colors.white : Colors.grey.shade400,child: InkWell(child:Padding(padding: const EdgeInsets.all(6),
          child:Row(
            crossAxisAlignment: CrossAxisAlignment.start,
            children: [
@@ -54,7 +53,7 @@ class StopsState extends State<Stops>{
                    decoration:  const BoxDecoration(shape: BoxShape.circle,color:  Color(0xff4688f1)),
                    child: const Center(child: Icon(Icons.check,size: 24,color: Colors.white,)))) :
 
-             stop.taskState=="Selected" ?
+             stop.taskState=="Selected" || stop.taskState=="SelectedAndNavigated" ?
              Padding(padding: const EdgeInsets.only(right: 8),
                  child: Container(width: w*0.15,height: h*0.07,
                      decoration:  const BoxDecoration(shape: BoxShape.circle,color:  Color(0xffE90052)),
@@ -91,10 +90,10 @@ class StopsState extends State<Stops>{
                      ],),
                  ),
                  Visibility(
-                   visible: stop.taskState=="Selected",
+                   visible: stop.taskState=="Selected" || stop.taskState=="SelectedAndNavigated",
                    child: const Divider(thickness: 1,color: Colors.grey,height: 1)),
                  Visibility(
-                     visible: stop.taskState=="Selected",
+                     visible: stop.taskState=="Selected" || stop.taskState=="SelectedAndNavigated",
                      child: Row(
                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                    children: [

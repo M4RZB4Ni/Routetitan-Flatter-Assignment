@@ -29,20 +29,21 @@ class HqState extends State<Hq> with SingleTickerProviderStateMixin{
 
     return Scaffold(appBar:AppBar(backgroundColor: Colors.black,bottom:
     TabBar(
+      onTap: (value) => false,
       controller: _tabController,
       tabs: [
         Consumer<StopData>(builder: (context, stopData, child) {
           return Tab(text: "STOPS(${stopData.stops.length})",);
 
         },),
-        const Tab(text: "MAP",),
+        const IgnorePointer(child: Tab(text: "MAP",)),
       ],
     ),),body:  TabBarView(
       controller: _tabController,
       physics: const NeverScrollableScrollPhysics(),
       children: [
         Stops(tabController: _tabController,),
-          Map()
+          const Map()
 
     ],),);
 
